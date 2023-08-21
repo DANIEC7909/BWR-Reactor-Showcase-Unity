@@ -3,11 +3,11 @@ using UnityEngine;
 
 public enum FluidType
 {
-    Water, HevyWater, Steam
+    Water, HevyWater, Steam, Heat
 }
 public enum TransportableType
 {
-    Pipe=0, Pump=1, Tank=2
+    Pipe=0, Pump=1, Tank=2, NuclearReactor=3
 }
 [System.Serializable]
 public struct Connection
@@ -30,8 +30,14 @@ public class Transportable : Buildable
     public FluidType FluidType;
     public Connection Connection;
     public TransportableType TransportableType;
-
-   
+    /// <summary>
+    /// This field declare is transportable have to care about transportation or doo basic stuff.
+    /// </summary>
+    protected bool DoBasicLoop;
+    /// <summary>
+    /// Power that this object requires to work propairly. If power is not required leave it as 0.
+    /// </summary>
+    public int Power;
 
     private void OnEnable()
     {
@@ -70,16 +76,19 @@ public class Transportable : Buildable
                 return;
             }
 
-            if (Amount > 0 && Outlet.Amount + TransportValuePerTick <= Outlet.MaxAmount)
-            {
-                Amount -= TransportValuePerTick;
-                Outlet.Amount += TransportValuePerTick;
+            if (!DoBasicLoop) return;
 
-            }
-            if (TransportableType != TransportableType.Pump&&Outlet.TransportableType!=TransportableType.Pump)
-            {
-                Outlet.Pressure = Pressure - 5;
-            }
+                if (Amount > 0 && Outlet.Amount + TransportValuePerTick <= Outlet.MaxAmount)
+                {
+                    Amount -= TransportValuePerTick;
+                    Outlet.Amount += TransportValuePerTick;
+
+                }
+                if (TransportableType != TransportableType.Pump && Outlet.TransportableType != TransportableType.Pump)
+                {
+                    Outlet.Pressure = Pressure - 5;
+                }
+            
         }
     }
 }
