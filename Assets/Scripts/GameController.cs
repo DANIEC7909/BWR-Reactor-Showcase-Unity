@@ -12,7 +12,7 @@ public sealed class GameController : Singleton<GameController>
     public bool BuildingModeState;
 
     public BuildingManager BuildingManager;
-
+    public int CurrentEnviormentTemperature=10;
     public InputActionMap GeneralUiActionMap;
     public InputAction BuildingToggleAction;
     private void OnEnable()
