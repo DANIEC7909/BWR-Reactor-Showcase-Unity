@@ -41,7 +41,7 @@ public class NuclearReactor : Transportable
 
     private void Start()
     {
-        DoBasicLoop = true;
+      //  DoBasicLoop = true;
         FluidType = FluidType.Heat;
         TransportableType = TransportableType.NuclearReactor;
     }
@@ -56,12 +56,19 @@ public class NuclearReactor : Transportable
                 if (currentTimeToProduceHeat < TimeToProduceHeat)//Action tick when we can do all calculation about energy production.
                 {
                     //TODO: Dodaæ ¿e jak w okreœlonym czasie iloœæ ciep³a nie jest odbierana na czas zwiêksza siê samoistnie przyrost temperatury.
-                    Temperature += Mathf.Lerp(ControlRodsMaxMultiplier, 0, ControlRodsInProcentage);
+                    if (ControlRodsInProcentage >=1&& Temperature>0)
+                    {
+                        Temperature -= (Time.deltaTime*0.5f);
+                    }
+                    else
+                    {
+                        Temperature += Mathf.Lerp(ControlRodsMaxMultiplier, 0, ControlRodsInProcentage);
+                    }
                     Fuel -= HeatCostInFuel;
                     if (Temperature >= TemperatureTresholdToProduceHeat)
                     {
-                    Amount += 100;
-                        Debug.Log("Reactor heated up!");
+                    Amount += (int)(Temperature/HeatCostInFuel);
+                        Debug.Log("Reactor heated up!"+ (int)(Temperature / HeatCostInFuel));
                     }
                     else
                     {
@@ -73,6 +80,10 @@ public class NuclearReactor : Transportable
             }
             else
             {
+                if (Temperature>0)
+                {
+                    Temperature -= (Time.deltaTime * 0.5f);
+                }
                 //not enough fuel.
                 Debug.Log("Not enough fuel!");
             }

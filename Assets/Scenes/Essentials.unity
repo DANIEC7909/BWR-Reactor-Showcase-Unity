@@ -637,6 +637,7 @@ MonoBehaviour:
   - {fileID: 6813295043833623404, guid: 0b5765a94a0b9fd4892d5c65b0121d40, type: 3}
   - {fileID: 960423893450935653, guid: 950d511ec4e27554d89975e1d01981be, type: 3}
   - {fileID: 2460313816255869533, guid: 7338f5f9cc6e23745a699956e9d2551c, type: 3}
+  - {fileID: 2511012501354040157, guid: 58b5bf49e24fd8c4997fb8fb1ebbc134, type: 3}
   PlacedBuildings: []
   BuildingID: 0
   ConnectionDistanceTreshold: 1.2

@@ -34,7 +34,7 @@ public class Transportable : Buildable
     /// <summary>
     /// This field declare is transportable have to care about transportation or doo basic stuff.
     /// </summary>
-    protected bool DoBasicLoop;
+  //  protected bool DoBasicLoop;
     /// <summary>
     /// Power that this object requires to work propairly. If power is not required leave it as 0.
     /// </summary>
@@ -69,6 +69,14 @@ public class Transportable : Buildable
         {
             if (!Outlet)
                 return;
+            if ( Outlet.FluidType ==FluidType.None)
+            {
+                Outlet.FluidType = this.FluidType;
+            }
+            if (this.FluidType == FluidType.Heat)
+            {
+                Pressure = PressureTransportTresholdToBroke;
+            }
             if (Pressure < PressureTransportTreshold)
                 return;
             if (Pressure > PressureTransportTresholdToBroke)
@@ -79,7 +87,7 @@ public class Transportable : Buildable
             if (FluidType == Outlet.FluidType || Outlet.FluidType == FluidType.None)
             {
 
-                if (!DoBasicLoop) return;
+             //   if (!DoBasicLoop) return;
 
                 if (Amount > 0 && Outlet.Amount + TransportValuePerTick <= Outlet.MaxAmount)
                 {
@@ -89,11 +97,16 @@ public class Transportable : Buildable
                 }
                 //Here we basically calculate temperature over distance and we check is temp is not less than level temperature.
                 Outlet.Temperature = Temperature > GameController.Instance.CurrentEnviormentTemperature ? Temperature - TemperatureDrop : GameController.Instance.CurrentEnviormentTemperature;
+
+
+               
                 
-                if (TransportableType != TransportableType.Pump && Outlet.TransportableType != TransportableType.Pump)
-                {
-                    Outlet.Pressure = Pressure - 5;
-                }
+                    if (TransportableType != TransportableType.Pump && Outlet.TransportableType != TransportableType.Pump)
+                    {
+                        Outlet.Pressure = Pressure - 5;
+                    }
+
+             
 
             }
             else

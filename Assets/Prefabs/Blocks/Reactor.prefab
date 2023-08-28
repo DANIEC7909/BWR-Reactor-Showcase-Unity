@@ -230,6 +230,16 @@ MonoBehaviour:
     InletTransform: {fileID: 5889361383614430663}
     OutletTransform: {fileID: 2382907953799445678}
   TransportableType: 3
+  TemperatureDrop: 1
+  Power: 0
+  MeltingTemperatureTreshold: 500
+  ControlRodsInProcentage: 1
+  Fuel: 0
+  TimeToProduceHeat: 0.5
+  currentTimeToProduceHeat: 0
+  HeatCostInFuel: 5
+  TemperatureTresholdToProduceHeat: 300
+  ControlRodsMaxMultiplier: 0.5
 --- !u!1 &7837453726192108801
 GameObject:
   m_ObjectHideFlags: 0

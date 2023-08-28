@@ -16,6 +16,7 @@ public class Pipe : Transportable
             Gizmos.color = Color.yellow;
         }
         Handles.Label(transform.position, Amount.ToString()+"/"+ Pressure.ToString());
+        Handles.Label(transform.position+Vector3.up*3, Temperature.ToString());
         Gizmos.DrawCube(transform.position +Vector3.up*5, new Vector3(0.5f, 0.5f, 0.5f));
         if (Outlet)
         {
