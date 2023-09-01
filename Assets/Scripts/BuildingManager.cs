@@ -88,54 +88,64 @@ public class BuildingManager : MonoBehaviour
             Buildable building = Instantiate(Buildables[BuildingID].gameObject, Ghost.transform.position, Ghost.transform.rotation).GetComponent<Buildable>();
             PlacedBuildings.Add(building);
             GameEvents.Instance.OnBuildingPlaced_C(building);
-
-            Transportable currentlyPlacedTransportable = (Transportable)building;
-            if (currentlyPlacedTransportable)
+            if (building is Transportable)
             {
-                foreach (Buildable bul in PlacedBuildings)
+                Transportable currentlyPlacedTransportable = (Transportable)building;
+                if (currentlyPlacedTransportable)
                 {
-                   /* if (currentlyPlacedTransportable.Outlet)
+                    foreach (Buildable bul in PlacedBuildings)
                     {
-                        Debug.Log("This part is already connected");
-                        continue;
-                    }*/
-                    if (!bul)
-                    {
-                        Debug.LogError("Here we have buildable null so i skip it for now.");
-                        continue;
-                    }
-                    Transportable lastPlaced = (Transportable)bul;
-                    if (lastPlaced)
-                    {
-                        if (lastPlaced == currentlyPlacedTransportable)
+                        /* if (currentlyPlacedTransportable.Outlet)
+                         {
+                             Debug.Log("This part is already connected");
+                             continue;
+                         }*/
+                        if (!bul)
+                        {
+                            Debug.LogError("Here we have buildable null so i skip it for now.");
+                            continue;
+                        }
+                        if(!(bul is Transportable))
                         {
                             continue;
                         }
-                        /* if (!lastPlaced.Outlet)
-                         {*/
-                        Debug.Log(Vector3.Distance(currentlyPlacedTransportable.Connection.InletTransform.position, lastPlaced.Connection.OutletTransform.position));
-                            if (Vector3.Distance(currentlyPlacedTransportable.Connection.InletTransform.position, lastPlaced.Connection.OutletTransform.position) < ConnectionDistanceTreshold)
+                        Transportable lastPlaced = (Transportable)bul;
+                        if (lastPlaced)
+                        {
+                            if (lastPlaced == currentlyPlacedTransportable)
                             {
-                                lastPlaced.Outlet = currentlyPlacedTransportable;
-                                Debug.Log("Connected!  lastPlaced.Outlet" + Vector3.Distance(currentlyPlacedTransportable.Connection.InletTransform.position, lastPlaced.Connection.OutletTransform.position));
+                                continue;
                             }
-                            
-                        //}
-                    
-                            if (Vector3.Distance(currentlyPlacedTransportable.Connection.OutletTransform.position, lastPlaced.Connection.InletTransform.position) < ConnectionDistanceTreshold)
+                            /* if (!lastPlaced.Outlet)
+                             {*/
+                            if (currentlyPlacedTransportable.Connection.InletTransform&&lastPlaced.Connection.OutletTransform)
                             {
-                                currentlyPlacedTransportable.Outlet = lastPlaced;
-                                Debug.Log("Connected!  currentlyPlacedTransportable.Outlet" + Vector3.Distance(currentlyPlacedTransportable.Connection.InletTransform.position, lastPlaced.Connection.OutletTransform.position));
+                                Debug.Log(Vector3.Distance(currentlyPlacedTransportable.Connection.InletTransform.position, lastPlaced.Connection.OutletTransform.position));
+                                if (Vector3.Distance(currentlyPlacedTransportable.Connection.InletTransform.position, lastPlaced.Connection.OutletTransform.position) < ConnectionDistanceTreshold)
+                                {
+                                    lastPlaced.Outlet = currentlyPlacedTransportable;
+                                    Debug.Log("Connected!  lastPlaced.Outlet" + Vector3.Distance(currentlyPlacedTransportable.Connection.InletTransform.position, lastPlaced.Connection.OutletTransform.position));
+                                }
                             }
-                           
+
+                            //}
+                            if (currentlyPlacedTransportable.Connection.OutletTransform&&lastPlaced.Connection.InletTransform)
+                            {
+                                if (Vector3.Distance(currentlyPlacedTransportable.Connection.OutletTransform.position, lastPlaced.Connection.InletTransform.position) < ConnectionDistanceTreshold)
+                                {
+                                    currentlyPlacedTransportable.Outlet = lastPlaced;
+                                   // Debug.Log("Connected!  currentlyPlacedTransportable.Outlet" + Vector3.Distance(currentlyPlacedTransportable.Connection.InletTransform.position, lastPlaced.Connection.OutletTransform.position));
+                                }
+                            }
 
 
+                        }
                     }
                 }
-            }
-            else
-            {
-                return;
+                else
+                {
+                    return;
+                }
             }
         }
     }
