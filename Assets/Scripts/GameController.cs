@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Profiling;
 using UnityEngine.SceneManagement;
 
 public sealed class GameController : Singleton<GameController>
@@ -10,6 +13,7 @@ public sealed class GameController : Singleton<GameController>
     const string BUILDING_TOGGLE_ACTION_KEY = "ToggleBuildingMode";
 
     public bool BuildingModeState;
+ public List<ElectricPolePowerGroup> ElectricPolePowerGroups = new List<ElectricPolePowerGroup>();
 
     public BuildingManager BuildingManager;
     public int CurrentEnviormentTemperature=10;
@@ -62,9 +66,11 @@ public sealed class GameController : Singleton<GameController>
 
     private void FixedUpdate()
     {
+        Profiler.BeginSample("sf.FluidTick");
         if (GameEvents.Instance != null)
         {
             GameEvents.Instance.OnFluidTick_C();
         }
+        Profiler.EndSample();
     }
 }

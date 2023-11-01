@@ -640,10 +640,13 @@ MonoBehaviour:
   - {fileID: 2511012501354040157, guid: 58b5bf49e24fd8c4997fb8fb1ebbc134, type: 3}
   - {fileID: 3938994162589723112, guid: 053d7c16547762448bf8e36890c4f07e, type: 3}
   - {fileID: 7111451812245699256, guid: 81d81cb9a052b094bae501fb8a6730c3, type: 3}
+  - {fileID: 5413605429551651209, guid: 9e840361f45918c49af58cb52024c96c, type: 3}
   PlacedBuildings: []
   BuildingID: 0
   ConnectionDistanceTreshold: 1.2
   DestroyMode: 0
+  ElectricPoleLineMaterial: {fileID: 2100000, guid: 8dd225f2506f3384a9803ec253f27c4a,
+    type: 2}
 --- !u!1001 &1096556214575390021
 PrefabInstance:
   m_ObjectHideFlags: 0

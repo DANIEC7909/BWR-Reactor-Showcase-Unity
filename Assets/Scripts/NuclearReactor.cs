@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class NuclearReactor : Transportable
 {
@@ -47,6 +48,7 @@ public class NuclearReactor : Transportable
     }
     public override void Tick()
     {
+        Profiler.BeginSample("sf.NuclearReactor");
         base.Tick();
         if (Temperature < MeltingTemperatureTreshold)
         {
@@ -68,11 +70,15 @@ public class NuclearReactor : Transportable
                     if (Temperature >= TemperatureTresholdToProduceHeat)
                     {
                     Amount += (int)(Temperature/HeatCostInFuel);
-                        Debug.Log("Reactor heated up!"+ (int)(Temperature / HeatCostInFuel));
+#if UNITY_EDITOR
+                         Debug.Log("Reactor heated up!"+ (int)(Temperature / HeatCostInFuel));
+#endif
                     }
                     else
                     {
-                        Debug.Log("Reactor is heating UP!...");
+#if UNITY_EDITOR
+                            Debug.Log("Reactor is heating UP!...");
+#endif
                     }
                   
                     currentTimeToProduceHeat = TimeToProduceHeat;
@@ -85,7 +91,7 @@ public class NuclearReactor : Transportable
                     Temperature -= (Time.deltaTime * 0.5f);
                 }
                 //not enough fuel.
-                Debug.Log("Not enough fuel!");
+               // Debug.Log("Not enough fuel!");
             }
         }
         else
@@ -93,5 +99,6 @@ public class NuclearReactor : Transportable
             //broke
             Debug.Log("Reactor blew up!");
         }
+        Profiler.EndSample();
     }
 }

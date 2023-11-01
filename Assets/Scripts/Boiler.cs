@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class Boiler : Buildable
 {
@@ -29,6 +30,7 @@ public class Boiler : Buildable
     
     private void Tick()
     {
+        Profiler.BeginSample("sf.Boiler");
                 SteamOutlet.Temperature = (HeatInlet.Temperature - (HeatInlet.Amount * 0.2f));
         if (HeatInlet.Temperature >= TemperatureToProduceSteam &&SteamOutlet.Amount+ ProducedSteamAmount < SteamOutlet.MaxAmount)
         {
@@ -45,5 +47,6 @@ public class Boiler : Buildable
         {
             Debug.Log("[Boiler] Temperature is too low");
         }
+        Profiler.EndSample();
     }
 }
